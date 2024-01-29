@@ -5,17 +5,17 @@
 		"primary": {
 			"first_name": {
 				"__TYPE__": "FieldContent",
-				"value": "speak",
+				"value": "whatever",
 				"type": "Text"
 			},
 			"last_name": {
 				"__TYPE__": "FieldContent",
-				"value": "ate",
+				"value": "dollar",
 				"type": "Text"
 			},
 			"tag_line": {
 				"__TYPE__": "FieldContent",
-				"value": "book",
+				"value": "valuable",
 				"type": "Text"
 			}
 		},

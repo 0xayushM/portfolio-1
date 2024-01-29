@@ -4,72 +4,72 @@ import type * as prismic from "@prismicio/client";
 
 type Simplify<T> = { [KeyType in keyof T]: T[KeyType] };
 
-type HomePageDocumentDataSlicesSlice = never;
+type HomepageDocumentDataSlicesSlice = HeroSlice;
 
 /**
- * Content for Home page documents
+ * Content for HomePage documents
  */
-interface HomePageDocumentData {
+interface HomepageDocumentData {
   /**
-   * Slice Zone field in *Home page*
+   * Slice Zone field in *HomePage*
    *
    * - **Field Type**: Slice Zone
    * - **Placeholder**: *None*
-   * - **API ID Path**: home_page.slices[]
+   * - **API ID Path**: homepage.slices[]
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/field#slices
    */
-  slices: prismic.SliceZone<HomePageDocumentDataSlicesSlice> /**
-   * Meta Description field in *Home page*
+  slices: prismic.SliceZone<HomepageDocumentDataSlicesSlice> /**
+   * Meta Title field in *HomePage*
    *
    * - **Field Type**: Text
-   * - **Placeholder**: A brief summary of the page
-   * - **API ID Path**: home_page.meta_description
+   * - **Placeholder**: A title of the page used for social media and search engines
+   * - **API ID Path**: homepage.meta_title
    * - **Tab**: SEO & Metadata
    * - **Documentation**: https://prismic.io/docs/field#key-text
    */;
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta Description field in *HomePage*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A brief summary of the page
+   * - **API ID Path**: homepage.meta_description
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
   meta_description: prismic.KeyTextField;
 
   /**
-   * Meta Image field in *Home page*
+   * Meta Image field in *HomePage*
    *
    * - **Field Type**: Image
    * - **Placeholder**: *None*
-   * - **API ID Path**: home_page.meta_image
+   * - **API ID Path**: homepage.meta_image
    * - **Tab**: SEO & Metadata
    * - **Documentation**: https://prismic.io/docs/field#image
    */
   meta_image: prismic.ImageField<never>;
-
-  /**
-   * Meta Title field in *Home page*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: A title of the page used for social media and search engines
-   * - **API ID Path**: home_page.meta_title
-   * - **Tab**: SEO & Metadata
-   * - **Documentation**: https://prismic.io/docs/field#key-text
-   */
-  meta_title: prismic.KeyTextField;
 }
 
 /**
- * Home page document from Prismic
+ * HomePage document from Prismic
  *
- * - **API ID**: `home_page`
+ * - **API ID**: `homepage`
  * - **Repeatable**: `false`
  * - **Documentation**: https://prismic.io/docs/custom-types
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type HomePageDocument<Lang extends string = string> =
+export type HomepageDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithoutUID<
-    Simplify<HomePageDocumentData>,
-    "home_page",
+    Simplify<HomepageDocumentData>,
+    "homepage",
     Lang
   >;
 
-export type AllDocumentTypes = HomePageDocument;
+export type AllDocumentTypes = HomepageDocument;
 
 /**
  * Primary content in *Hero → Primary*
@@ -143,9 +143,9 @@ declare module "@prismicio/client" {
 
   namespace Content {
     export type {
-      HomePageDocument,
-      HomePageDocumentData,
-      HomePageDocumentDataSlicesSlice,
+      HomepageDocument,
+      HomepageDocumentData,
+      HomepageDocumentDataSlicesSlice,
       AllDocumentTypes,
       HeroSlice,
       HeroSliceDefaultPrimary,
