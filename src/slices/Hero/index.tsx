@@ -1,4 +1,4 @@
-import { Content } from "@prismicio/client";
+import { Content, KeyTextField } from "@prismicio/client";
 import { SliceComponentProps } from "@prismicio/react";
 
 /**
@@ -10,6 +10,18 @@ export type HeroProps = SliceComponentProps<Content.HeroSlice>;
  * Component for "Hero" Slices.
  */
 const Hero = ({ slice }: HeroProps): JSX.Element => {
+
+  // function which splits the letters into spans for animation effects
+  const renderLetters = (name: KeyTextField, key: string): JSX.Element[] | null => {
+    if (!name) return null;
+  
+    return name.split("").map((letter, index) => (
+      <span key={index} className={`name-animation name-animation-${key} inline-block opacity-0`}>
+        {letter}
+      </span>
+    ));
+  };
+
   return (
     <section
       data-slice-type={slice.slice_type}
@@ -20,8 +32,12 @@ const Hero = ({ slice }: HeroProps): JSX.Element => {
           <h1 className="mb-8 font-extrabold leading-none tracking-tighter text-[clamp(3rem,20vmin,20rem)]"
               aria-label={slice.primary.first_name + " " + slice.primary.last_name}
           >
-            <span className="block text-slate-300">{slice.primary.first_name}</span>
-            <span className="-mt-[.0em] block text-slate-500">{slice.primary.last_name}</span>
+            <span className="block text-slate-300">
+              {renderLetters(slice.primary.first_name, "first")}
+            </span>
+            <span className="-mt-[.0em] block text-slate-500">
+              {renderLetters(slice.primary.last_name, "last")}
+            </span>
           </h1>
           <span className="block bg-gradient-to-tr from-yellow-500 via-yellow-200 to-yellow-500 bg-clip-text text-2xl font-bold uppercase tracking-[.2em] text-transparent opacity-1 md:text-4xl">{slice.primary.tag_line}</span>
         </div>
