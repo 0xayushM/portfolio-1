@@ -2,7 +2,7 @@
 
 import * as THREE from 'three'
 import {Canvas} from '@react-three/fiber'
-import { ContactShadows, Flat, Environment, Float } from '@react-three/drei'
+import { ContactShadows, Environment, Float } from '@react-three/drei'
 import { Suspense, useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 
@@ -12,8 +12,8 @@ export default function Shapes() {
             <Canvas className='z-0' shadows gl={{antialias:false}} dpr={[1,1.5]} camera={{position:[0,0,25], fov:30, near:1, far:40}}>
                 <Geometries/>
                 <Suspense fallback={null}>
-                    <ContactShadows position={[0,-3,5,0]} opacity={0.65} scale={40} blur={1} far={9} />
-                    <Environment preset='studio'/>
+                    <ContactShadows position={[0,-3.5,0]} opacity={0.65} scale={40} blur={1} far={9} />
+                    <Environment preset='city' />
                 </Suspense>
             </Canvas>
         </div>
