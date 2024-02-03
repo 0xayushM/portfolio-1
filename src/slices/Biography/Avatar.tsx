@@ -20,8 +20,29 @@ export default function Avatar({ image, className }: AvatarProps) {
                 {opacity:0, scale:1.4},
                 {opacity:1, scale:1, duration:1.3, ease: "power3.inOut"},
             )
-        })
-    })
+            window.onmousemove = (e) => {
+                if(!component.current) return;
+                const componentReact =(component.current as HTMLElement).getBoundingClientRect()
+                const componentCenterX = componentReact.left + componentReact.width / 2
+
+                let componentPercent= {
+                    x: (e.clientX - componentCenterX) / componentReact.width / 2 
+                }
+                let distFromCenter = 1 - Math.abs(componentPercent.x)
+
+                gsap.timeline({
+                    default: {duration:.5, overwrite: "auto", ease:"power3.Out"}
+                }).to(".avatar",{
+                    rotation: gsap.utils.clamp(-2, 2,5*componentPercent.x),
+                    duration: .5,
+                }, 0 ).to(".highlight", {
+                    opacity: distFromCenter - 0.7,
+                    x: -10+20 & componentPercent.x,
+                    duration: .5
+                }, 0 )
+            }
+        }, component)
+    },[])
   
     return (
     <div ref={component} className={clsx("relative h-full w-full", className)}>
