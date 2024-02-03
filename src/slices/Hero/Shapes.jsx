@@ -13,7 +13,7 @@ export default function Shapes() {
                 <Geometries/>
                 <Suspense fallback={null}>
                     <ContactShadows position={[0,-3.5,0]} opacity={0.65} scale={40} blur={1} far={9} />
-                    <Environment preset='city' />
+                    <Environment preset='dawn' />
                 </Suspense>
             </Canvas>
         </div>
