@@ -69,7 +69,10 @@ export type HomepageDocument<Lang extends string = string> =
     Lang
   >;
 
-type PageDocumentDataSlicesSlice = TechListSlice | BiographySlice;
+type PageDocumentDataSlicesSlice =
+  | ContentIndexSlice
+  | TechListSlice
+  | BiographySlice;
 
 /**
  * Content for Page documents
@@ -122,7 +125,7 @@ interface PageDocumentData {
  * Page document from Prismic
  *
  * - **API ID**: `page`
- * - **Repeatable**: `false`
+ * - **Repeatable**: `true`
  * - **Documentation**: https://prismic.io/docs/custom-types
  *
  * @typeParam Lang - Language API ID of the document.
@@ -375,6 +378,91 @@ export type BiographySlice = prismic.SharedSlice<
 >;
 
 /**
+ * Primary content in *ContentIndex → Primary*
+ */
+export interface ContentIndexSliceDefaultPrimary {
+  /**
+   * Heading field in *ContentIndex → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: content_index.primary.heading
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  heading: prismic.KeyTextField;
+
+  /**
+   * Content Type field in *ContentIndex → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **API ID Path**: content_index.primary.content_type
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  content_type: prismic.SelectField<"Blog" | "Project">;
+
+  /**
+   * Description field in *ContentIndex → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: content_index.primary.description
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  description: prismic.RichTextField;
+
+  /**
+   * View More Text field in *ContentIndex → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: content_index.primary.view_more_text
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  view_more_text: prismic.KeyTextField;
+
+  /**
+   * Fallback Item Image field in *ContentIndex → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: content_index.primary.fallback_item_image
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  fallback_item_image: prismic.ImageField<never>;
+}
+
+/**
+ * Default variation for ContentIndex Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type ContentIndexSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<ContentIndexSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *ContentIndex*
+ */
+type ContentIndexSliceVariation = ContentIndexSliceDefault;
+
+/**
+ * ContentIndex Shared Slice
+ *
+ * - **API ID**: `content_index`
+ * - **Description**: ContentIndex
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type ContentIndexSlice = prismic.SharedSlice<
+  "content_index",
+  ContentIndexSliceVariation
+>;
+
+/**
  * Primary content in *Hero → Primary*
  */
 export interface HeroSliceDefaultPrimary {
@@ -435,6 +523,51 @@ type HeroSliceVariation = HeroSliceDefault;
  * - **Documentation**: https://prismic.io/docs/slice
  */
 export type HeroSlice = prismic.SharedSlice<"hero", HeroSliceVariation>;
+
+/**
+ * Primary content in *Settings → Primary*
+ */
+export interface SettingsSliceDefaultPrimary {
+  /**
+   * Name field in *Settings → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.primary.name
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  name: prismic.KeyTextField;
+}
+
+/**
+ * Default variation for Settings Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type SettingsSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<SettingsSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *Settings*
+ */
+type SettingsSliceVariation = SettingsSliceDefault;
+
+/**
+ * Settings Shared Slice
+ *
+ * - **API ID**: `settings`
+ * - **Description**: Settings
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type SettingsSlice = prismic.SharedSlice<
+  "settings",
+  SettingsSliceVariation
+>;
 
 /**
  * Primary content in *TechList → Primary*
@@ -530,10 +663,18 @@ declare module "@prismicio/client" {
       BiographySliceDefaultPrimary,
       BiographySliceVariation,
       BiographySliceDefault,
+      ContentIndexSlice,
+      ContentIndexSliceDefaultPrimary,
+      ContentIndexSliceVariation,
+      ContentIndexSliceDefault,
       HeroSlice,
       HeroSliceDefaultPrimary,
       HeroSliceVariation,
       HeroSliceDefault,
+      SettingsSlice,
+      SettingsSliceDefaultPrimary,
+      SettingsSliceVariation,
+      SettingsSliceDefault,
       TechListSlice,
       TechListSliceDefaultPrimary,
       TechListSliceDefaultItem,
