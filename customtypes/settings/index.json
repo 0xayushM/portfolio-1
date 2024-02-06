@@ -75,6 +75,14 @@
           "placeholder": "",
           "select": null
         }
+      },
+      "mail": {
+        "type": "Link",
+        "config": {
+          "label": "Mail",
+          "placeholder": "",
+          "select": null
+        }
       }
     },
     "SEO and Metadata": {

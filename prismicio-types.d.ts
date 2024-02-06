@@ -433,7 +433,18 @@ interface SettingsDocumentData {
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
    */
-  linkedin_link: prismic.LinkField /**
+  linkedin_link: prismic.LinkField;
+
+  /**
+   * Mail field in *Settings*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.mail
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  mail: prismic.LinkField /**
    * Meta Title field in *Settings*
    *
    * - **Field Type**: Text
