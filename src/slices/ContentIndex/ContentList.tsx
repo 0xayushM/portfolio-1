@@ -4,6 +4,9 @@ import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 import { MdArrowOutward } from "react-icons/md";
 import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger)
 
 type ContentListProps = {
   items: Content.BlogPostDocument[] | Content.ProjectDocument[];
@@ -21,39 +24,64 @@ export default function ContentList({
   const [currentItem, setCurrentItem] = useState<null | number>(null);
   const component = useRef(null);
   const revealRef = useRef(null);
+  const itemsRef = useRef<Array<HTMLLIElement | null>>([]);
   const urlPrefixes = contentType === "Blog" ? "/blog" : "/project";
-  const lastMousePos = useRef({x:0,y:0})
-  useEffect(()=> {
+  const lastMousePos = useRef({ x: 0, y: 0 });
+
+  useEffect(()=>{
+    let ctx = gsap.context(() => {
+        itemsRef.current.forEach((item)=>{
+            gsap.fromTo(item, {
+                opacity:0,
+                y:20
+            }, {
+                opacity:1,
+                y:0,
+                duration:1.3,
+                ease:"eastic.out(1,0.3)",
+                scrollTrigger: {
+                    trigger: item,
+                    start: "top bottom -= 100px",
+                    end: "bottom center",
+                    toggleActions: "play none none none"
+                }
+            })
+        })
+        return ()=> ctx.revert()
+    }, component)
+  },[])
+
+
+  useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-        const mousePos =  {x: e.clientX, y: e.clientY + window.scrollY}
-        // calculate speed and direction
-        const speed = Math.sqrt(Math.pow(mousePos.x - lastMousePos.current.x, 2))
+      const mousePos = { x: e.clientX, y: e.clientY + window.scrollY };
+      // calculate speed and direction
+      const speed = Math.sqrt(Math.pow(mousePos.x - lastMousePos.current.x, 2));
 
-        let ctx = gsap.context(()=> {
-            if (currentItem !== null) {
-                const maxY = window.scrollY + window.innerHeight - 250;
-                const maxX = window.innerWidth - 350;
+      let ctx = gsap.context(() => {
+        if (currentItem !== null) {
+          const maxY = window.scrollY + window.innerHeight - 250;
+          const maxX = window.innerWidth - 350;
 
-                gsap.to(revealRef.current, {
-                    x: gsap.utils.clamp(0, maxX, mousePos.x-160),
-                    y: gsap.utils.clamp(0,maxY,mousePos.y-110),
-                    rotation: speed * (mousePos.x > lastMousePos.current.x ? 1 : -1),
-                    ease: "back.out(2)",
-                    duration: 1.3
-                }) 
-                
-            }
-            lastMousePos.current = mousePos
-            return () => ctx.revert()
-        }, component)
-    }
+          gsap.to(revealRef.current, {
+            x: gsap.utils.clamp(0, maxX, mousePos.x - 160),
+            y: gsap.utils.clamp(0, maxY, mousePos.y - 110),
+            rotation: speed * (mousePos.x > lastMousePos.current.x ? 1 : -1),
+            ease: "back.out(2)",
+            duration: 1.3,
+            opacity: 1,
+          });
+        }
+        lastMousePos.current = mousePos;
+        return () => ctx.revert();
+      }, component);
+    };
 
-    window.addEventListener("mousemove", handleMouseMove)
+    window.addEventListener("mousemove", handleMouseMove);
     return () => {
-        window.removeEventListener("mousemove", handleMouseMove)
-    }
-  }, [currentItem])
-
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, [currentItem]);
 
   const contentImages = items.map((item) => {
     const image = isFilled.image(item.data.hover_image)
@@ -67,6 +95,15 @@ export default function ContentList({
     });
   });
 
+  useEffect(()=> {
+    contentImages.forEach((url) => {
+        if(!url) return
+        const img = new Image()
+        img.src = url
+        
+    })
+  }, [contentImages])
+
   const onMouseEnter = (index: number) => {
     setCurrentItem(index);
   };
@@ -75,9 +112,14 @@ export default function ContentList({
     setCurrentItem(null);
   };
 
+  
+
   return (
     <div>
-      <ul className="grid border-b border-b-slate-100" onMouseLeave={onMouseLeave}>
+      <ul
+        className="grid border-b border-b-slate-100"
+        onMouseLeave={onMouseLeave}
+      >
         {items.map((item, index) => (
           <>
             {isFilled.keyText(item.data.title) && (
@@ -85,6 +127,7 @@ export default function ContentList({
                 key={index}
                 className="list-item opacity-0f"
                 onMouseEnter={() => onMouseEnter(index)}
+                ref={(el) => (itemsRef.current[index] = el)}
               >
                 <Link
                   href={urlPrefixes + "/" + item.uid}
@@ -113,7 +156,7 @@ export default function ContentList({
 
       {/*hover element*/}
       <div
-        className="hover-reveal pointer-events-none absolute left-0 top-0 -z-10 h-[220px] w-[320px] rounded-lg bg-cover bg-center opacity-0f transition-[background] duration-300"
+        className="hover-reveal pointer-events-none absolute left-0 top-0 -z-10 h-[220px] w-[320px] rounded-lg bg-cover bg-center opacity-0 transition-[background] duration-300"
         style={{
           backgroundImage:
             currentItem !== null ? `url(${contentImages[currentItem]})` : "",
