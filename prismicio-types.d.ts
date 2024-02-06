@@ -232,7 +232,10 @@ interface PageDocumentData {
 export type PageDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<Simplify<PageDocumentData>, "page", Lang>;
 
-type ProjectDocumentDataSlicesSlice = TextBlockSlice;
+type ProjectDocumentDataSlicesSlice =
+  | LinkBlockSlice
+  | ImageBlockSlice
+  | TextBlockSlice;
 
 /**
  * Content for Project documents
@@ -870,6 +873,71 @@ export type ImageBlockSlice = prismic.SharedSlice<
 >;
 
 /**
+ * Primary content in *LinkBlock → Primary*
+ */
+export interface LinkBlockSliceDefaultPrimary {
+  /**
+   * Github link field in *LinkBlock → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: link_block.primary.github_link
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  github_link: prismic.LinkField;
+
+  /**
+   * Youtube Link field in *LinkBlock → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: link_block.primary.youtube_link
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  youtube_link: prismic.LinkField;
+
+  /**
+   * Deployed Link field in *LinkBlock → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: link_block.primary.deployed_link
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  deployed_link: prismic.LinkField;
+}
+
+/**
+ * Default variation for LinkBlock Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type LinkBlockSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<LinkBlockSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *LinkBlock*
+ */
+type LinkBlockSliceVariation = LinkBlockSliceDefault;
+
+/**
+ * LinkBlock Shared Slice
+ *
+ * - **API ID**: `link_block`
+ * - **Description**: LinkBlock
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type LinkBlockSlice = prismic.SharedSlice<
+  "link_block",
+  LinkBlockSliceVariation
+>;
+
+/**
  * Primary content in *Settings → Primary*
  */
 export interface SettingsSliceDefaultPrimary {
@@ -1076,6 +1144,10 @@ declare module "@prismicio/client" {
       ImageBlockSliceDefaultPrimary,
       ImageBlockSliceVariation,
       ImageBlockSliceDefault,
+      LinkBlockSlice,
+      LinkBlockSliceDefaultPrimary,
+      LinkBlockSliceVariation,
+      LinkBlockSliceDefault,
       SettingsSlice,
       SettingsSliceDefaultPrimary,
       SettingsSliceVariation,

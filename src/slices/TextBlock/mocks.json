@@ -9,12 +9,17 @@
 					{
 						"type": "paragraph",
 						"content": {
-							"text": "Ex amet id ea reprehenderit veniam id ex Lorem officia nostrud est in. Sit proident labore irure exercitation irure ipsum."
+							"text": "Nisi ea proident dolor veniam. Sunt sunt voluptate ipsum qui ex incididunt anim sit quis in culpa adipisicing ullamco."
 						}
 					}
 				]
 			}
 		},
-		"items": []
+		"items": [
+			{
+				"__TYPE__": "GroupItemContent",
+				"value": []
+			}
+		]
 	}
 ]
