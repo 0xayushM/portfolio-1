@@ -1,8 +1,9 @@
 "use client";
 import { Content, asImageSrc, isFilled } from "@prismicio/client";
 import Link from "next/link";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { MdArrowOutward } from "react-icons/md";
+import { gsap } from "gsap";
 
 type ContentListProps = {
   items: Content.BlogPostDocument[] | Content.ProjectDocument[];
@@ -19,7 +20,40 @@ export default function ContentList({
 }: ContentListProps) {
   const [currentItem, setCurrentItem] = useState<null | number>(null);
   const component = useRef(null);
+  const revealRef = useRef(null);
   const urlPrefixes = contentType === "Blog" ? "/blog" : "/project";
+  const lastMousePos = useRef({x:0,y:0})
+  useEffect(()=> {
+    const handleMouseMove = (e: MouseEvent) => {
+        const mousePos =  {x: e.clientX, y: e.clientY + window.scrollY}
+        // calculate speed and direction
+        const speed = Math.sqrt(Math.pow(mousePos.x - lastMousePos.current.x, 2))
+
+        let ctx = gsap.context(()=> {
+            if (currentItem !== null) {
+                const maxY = window.scrollY + window.innerHeight - 250;
+                const maxX = window.innerWidth - 350;
+
+                gsap.to(revealRef.current, {
+                    x: gsap.utils.clamp(0, maxX, mousePos.x-160),
+                    y: gsap.utils.clamp(0,maxY,mousePos.y-110),
+                    rotation: speed * (mousePos.x > lastMousePos.current.x ? 1 : -1),
+                    ease: "back.out(2)",
+                    duration: 1.3
+                }) 
+                
+            }
+            lastMousePos.current = mousePos
+            return () => ctx.revert()
+        }, component)
+    }
+
+    window.addEventListener("mousemove", handleMouseMove)
+    return () => {
+        window.removeEventListener("mousemove", handleMouseMove)
+    }
+  }, [currentItem])
+
 
   const contentImages = items.map((item) => {
     const image = isFilled.image(item.data.hover_image)
@@ -84,6 +118,7 @@ export default function ContentList({
           backgroundImage:
             currentItem !== null ? `url(${contentImages[currentItem]})` : "",
         }}
+        ref={revealRef}
       ></div>
     </div>
   );
