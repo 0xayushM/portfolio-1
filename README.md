@@ -5,7 +5,7 @@
 
 <div align=''>
 
-### [Demo](https://portfolio-0xayushM.vercel.app/) | [Video](https://youtu.be/2APJkBapPJg)
+### [Live](https://portfolio-0xayushM.vercel.app/) | [Video](https://youtu.be/2APJkBapPJg)
 
 </div>
 
@@ -24,22 +24,27 @@
 
 ## 💡 Key Features:
 
-Stylish Design: A modern and visually appealing layout that reflects my unique style and personality.
+- **Stylish Design:** A modern and visually appealing layout that reflects my unique style and personality.
 
-Interactivity: Engaging visitors with interactive elements that create a memorable and immersive experience.
+- **Interactivity:** Engaging visitors with interactive elements that create a memorable and immersive experience.
 
-3D Effects: Showcasing creativity through Three.js, bringing dynamic 3D effects to captivate attention and leave a lasting impression.
+- **3D Effects:** Showcasing creativity through Three.js, bringing dynamic 3D effects to captivate attention and leave a lasting impression.
 
-Smooth Animations: Mastering GSAP for fluid and captivating animations that enhance the overall user experience.
+- **Smooth Animations:** Mastering GSAP for fluid and captivating animations that enhance the overall user experience.
 
-Professional Look: Utilizing Tailwind CSS to achieve a polished appearance, ensuring my portfolio leaves a positive impression on potential clients, collaborators, and employers.
+- **Professional Look:** Utilizing Tailwind CSS to achieve a polished appearance, ensuring my portfolio leaves a positive impression on potential clients, collaborators, and employers.
 
 ## 👨‍💻 Explore My Portfolio If:
 
-You're seeking a visually impressive representation of my skills and achievements.
+- You're seeking a visually impressive representation of my skills and achievements.
 
-You appreciate innovative design and cutting-edge technologies.
+- You appreciate innovative design and cutting-edge technologies.
 
-You want to engage with a portfolio that goes beyond the ordinary, leaving a lasting impact.
+- You want to engage with a portfolio that goes beyond the ordinary, leaving a lasting impact.
 
-Embark on this journey through my portfolio, where each element has been meticulously crafted to showcase not just what I do, but who I am. Let's connect, innovate, and explore the possibilities together!
+- Embark on this journey through my portfolio, where each element has been meticulously crafted to showcase not just what I do, but who I am. Let's connect, innovate, and explore the possibilities together!
+
+<hr>
+
+### <p align="center">Built with ❤️ by [0xayushM](https://www.ayushmangal.com) 🚀</p>
+<!--- npx @slicemachine/init @latest --repository portfolio-1-0xayushm --->
