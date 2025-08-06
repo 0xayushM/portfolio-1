@@ -5,7 +5,7 @@
 
 <div align=''>
 
-### [Live](https://portfolio-0xayushM.vercel.app/) | [Video](https://youtu.be/2APJkBapPJg)
+### [Live](https://ayushmangal.brewmyagent.com) | [Video](https://youtu.be/2APJkBapPJg)
 
 </div>
 
@@ -46,5 +46,5 @@
 
 <hr>
 
-### <p align="center">Built with ❤️ by [0xayushM](https://www.ayushmangal.com) 🚀</p>
+### <p align="center">Built with ❤️ by [0xayushM](https://ayushmangal.brewmyagent.com) 🚀</p>
 <!--- npx @slicemachine/init @latest --repository portfolio-1-0xayushm --->

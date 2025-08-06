@@ -6,18 +6,11 @@ import gsap from "gsap";
 import Bounded from "@/components/Bounded";
 import Shapes from './Shapes'
 
-/**
- * Props for `Hero`.
- */
 export type HeroProps = SliceComponentProps<Content.HeroSlice>;
 
-/**
- * Component for "Hero" Slices.
- */
 const Hero = ({ slice }: HeroProps): JSX.Element => {
 
   const component = useRef(null)
-  // letter animation using gsap
   useEffect(() => {
     let ctx = gsap.context(()=>{
       const tl = gsap.timeline()
@@ -56,7 +49,6 @@ const Hero = ({ slice }: HeroProps): JSX.Element => {
     return () => ctx.revert()
   }, [])
 
-  // function which splits the letters into spans for animation effects
   const renderLetters = (name: KeyTextField, key: string): JSX.Element[] | null => {
     if (!name) return null;
   
